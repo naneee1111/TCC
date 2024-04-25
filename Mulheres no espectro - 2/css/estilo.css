@@ -96,11 +96,14 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Times New Roman', Times, serif;
+    justify-content: center;
+    text-align: center;
 }
 
 .headline p {
     color: #8250a3;
-    text-align: left;
+    text-align: center;
+    
 
 }
 
