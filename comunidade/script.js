@@ -1,25 +1,38 @@
-const imgs = document.getElementById("img1");
-const img = document.querySelectorAll("#img1 img");
 
-let idx = 0;
 
-function slider1(){
-    idx++;
+(function () {
+    // Código para inicializar o carousel
+    var radios = document.querySelectorAll('input[name="position"]');
+    var items = document.querySelectorAll('#carousel .item');
 
-    if(idx > img.length - 1){
-        idx = 0;
-    }
+    radios.forEach(function (radio, index) {
+        radio.addEventListener('change', function () {
+            // Esconder todos os itens
+            items.forEach(function (item) {
+                item.style.display = 'none';
+            });
 
-    imgs.style.transform = `translateX(${-idx *  200}px)`;
-}
+            // Mostrar o item correspondente ao radio selecionado
+            items[index].style.display = 'block';
+        });
+    });
+})();
+(function () {
+    var radios = document.querySelectorAll('input[name="position"]');
+    var carousel = document.querySelector('#carousel');
 
-setInterval(slider1, 2000);
+    radios.forEach(function (radio, index) {
+        radio.addEventListener('change', function () {
+            carousel.style.setProperty('--position', index + 1);
+        });
+    });
+})();
 
 //comunidade
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const comentarioForm = document.getElementById('comentario-form');
-    comentarioForm.addEventListener('submit', function(e) {
+    comentarioForm.addEventListener('submit', function (e) {
         e.preventDefault();
         adicionarComentario();
     });
@@ -37,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const comentarioTexto = criarElemento('p', comentario);
 
         const respostaButton = criarElemento('button', 'Responder');
-        respostaButton.addEventListener('click', function() {
+        respostaButton.addEventListener('click', function () {
             const respostaForm = criarFormularioResposta(comentarioItem);
             comentarioItem.appendChild(respostaForm);
             respostaForm.style.display = 'block';
@@ -60,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const comentarios = JSON.parse(localStorage.getItem('comentarios')) || [];
-    comentarios.forEach(function(comentario) {
+    comentarios.forEach(function (comentario) {
         const comentarioItem = criarElemento('div', null, 'comentario-item');
         const comentarioNome = criarElemento('p', `Nome: ${comentario.nome}`);
         comentarioNome.style.color = localStorage.getItem(`cor${comentario.nome}`);
@@ -71,12 +84,12 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('lista-comentarios').appendChild(comentarioItem);
 
         const respostas = JSON.parse(localStorage.getItem('respostas')) || [];
-        const respostaItem = respostas.find(function(item) {
+        const respostaItem = respostas.find(function (item) {
             return item.nome === comentario.nome;
         });
 
         if (respostaItem) {
-            respostaItem.resposta.forEach(function(resposta) {
+            respostaItem.resposta.forEach(function (resposta) {
                 const respostaItem = criarElemento('div', null, 'resposta-item');
                 const respostaNomeP = criarElemento('p', `Resposta de ${resposta.nome}:`);
                 respostaNomeP.style.color = localStorage.getItem(`cor${resposta.nome}`);
@@ -111,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <button type="submit" class="btn-submit">Enviar Resposta</button>
         `;
 
-        respostaForm.addEventListener('submit', function(e) {
+        respostaForm.addEventListener('submit', function (e) {
             e.preventDefault();
             adicionarResposta(this, parentItem);
         });
@@ -129,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const respostaTexto = criarElemento('p', resposta);
 
         const respostaButton = criarElemento('button', 'Responder');
-        respostaButton.addEventListener('click', function() {
+        respostaButton.addEventListener('click', function () {
             const novaRespostaForm = criarFormularioResposta(respostaItem);
             respostaItem.appendChild(novaRespostaForm);
             novaRespostaForm.style.display = 'block';
@@ -143,3 +156,9 @@ document.addEventListener("DOMContentLoaded", function() {
         form.remove();
     }
 });
+
+
+
+
+
+
